@@ -2,7 +2,7 @@
 // "metadata":[{"id": 940, "ethnicity": "Caucasian", "gender": "F", "age": 24.0, "location": "Beaufort/NC", "bbtype": "I", "wfreq": 2.0},
 // samples: [id (values), otu_ids (lists), sample_values (lists), otu_labels (lists)]
 
-var select = document.getElementById("selDataset");
+var dropdownMenu = d3.select("#selDataset");
 
 
 
