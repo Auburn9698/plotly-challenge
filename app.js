@@ -11,6 +11,9 @@ function displayInfo(sampleID) {
       var metaData = jsonData.metadata.filter(sample => sample.id == sampleID)[0]
       var demoPanel = d3.select("#sample-metadata")
       
+      // clear metadata
+      demoPanel.html("")
+
       // Add the subjects to the panel with key and value pairs:
       Object.entries(metaData).forEach(([key, value]) => {
         demoPanel.append("h6").text(`${key}: ${value}`)
@@ -34,6 +37,7 @@ function buildPlots(sampleID) {
     x: reverseSlice,
     y: otuIds.slice(0,10).map(otuIds => `OTU ${otuIds}`).reverse(),
     text: otuLabels.slice(0,10).reverse(),
+    marker:{color: "#0000ff"},
     type: "bar",
     orientation: "h"
   };
@@ -80,19 +84,3 @@ function optionChanged() {
 
 // Call init to initialize the page:
 init();
-
-
-
-
-
-
-
-
-
-
-var dropdownMenu = d3.select("#selDataset");
-
-
-//d3.json("data/samples.json").then((data) =>  {
-
-//});
