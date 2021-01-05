@@ -85,12 +85,15 @@ function buildPlots(sampleID) {
   };
   Plotly.newPlot("bubble", bubbleData, bubbleLayout, config);
 
-  var subject_metadata = jsonData.metadata.filter(subject => subject.id == sampleID)
-
+  // Add a gauge chart with https://plot.ly/javascript/gauge-charts/ :
+  var subjectMetadata = jsonData.metadata.filter(subject => subject.id == sampleID)
+  console.log(subjectMetadata[0].wfreq);
+  
+  // Build data for gauge chart:
   var trace3 = {
       type: "indicator",
       mode: "gauge+number",
-      value: subject_metadata[0].wfreq,
+      value: subjectMetadata[0].wfreq,
       title: {text: "Wash Frequency per Week"},
       gauge: {
           axis: {range: [0,9], tickwidth: 1, tickcolor: "darkblue"},
@@ -110,7 +113,7 @@ function buildPlots(sampleID) {
     }
     var gaugeData = [trace3];
     var gaugeLayout = {
-        margin: { t: 0, b: 0 },
+        margin: { t: 25, r: 25, l: 25, b: 25 },
         paper_bgcolor: "lavender",
         fontcolor: "#8B4A8C"
     };
