@@ -84,6 +84,37 @@ function buildPlots(sampleID) {
       yaxis: {title: "Abundance"}
   };
   Plotly.newPlot("bubble", bubbleData, bubbleLayout, config);
+
+  var subject_metadata = jsonData.metadata.filter(subject => subject.id == sampleID)
+
+  var trace3 = {
+      type: "indicator",
+      mode: "gauge+number",
+      value: subject_metadata[0].wfreq,
+      title: {text: "Wash Frequency per Week"},
+      gauge: {
+          axis: {range: [0,9], tickwidth: 1, tickcolor: "darkblue"},
+          bar: { color: "darkblue" },
+          steps: [
+            { range: [0, 1], color: "#ffffff" },
+            { range: [1, 2], color: "#e6f0ff" },
+            { range: [2, 3], color: "#cce0ff" },
+            { range: [3, 4], color: "#b3d1ff" },
+            { range: [4, 5], color: "#99c2ff" },
+            { range: [5, 6], color: "#80b3ff" },
+            { range: [6, 7], color: "#66a3ff" },
+            { range: [7, 8], color: "#4d94ff" },
+            { range: [8, 9], color: "#3385ff" }
+          ],
+        }
+    }
+    var gaugeData = [trace3];
+    var gaugeLayout = {
+        margin: { t: 0, b: 0 },
+        paper_bgcolor: "lavender",
+        fontcolor: "#8B4A8C"
+    };
+    Plotly.newPlot("gauge", gaugeData, gaugeLayout)
 })
 }
 
