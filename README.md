@@ -1,3 +1,5 @@
+Published at GitHub Pages: https://auburn9698.github.io/plotly-challenge/
+
 # Plotly Challenge - Belly Button Biodiversity
 
 ![Bacteria by filterforge.com](Images/bacteria.jpg)
