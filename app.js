@@ -97,7 +97,7 @@ function buildPlots(sampleID) {
       title: {text: "Wash Frequency per Week"},
       gauge: {
           axis: {range: [0,9], tickwidth: 1, tickcolor: "darkblue"},
-          bar: { color: "darkblue" },
+          bar: {color: "darkblue"},
           steps: [
             { range: [0, 1], color: "#ffffff" },
             { range: [1, 2], color: "#e6f0ff" },
