@@ -96,7 +96,10 @@ function buildPlots(sampleID) {
       value: subjectMetadata[0].wfreq,
       title: {text: "Wash Frequency per Week"},
       gauge: {
-          axis: {range: [0,9], tickwidth: 1, tickcolor: "darkblue"},
+          axis: {range: [0,9], tickwidth: 1, tickcolor: "darkblue",
+          tickmode: "array",
+          tickvals: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+          ticktext: ["0", "1", "2","3", "4", "5", "6", "7", "8", "9"]},
           bar: {color: "darkblue"},
           steps: [
             { range: [0, 1], color: "#ffffff" },
