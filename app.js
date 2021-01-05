@@ -52,6 +52,7 @@ function buildPlots(sampleID) {
   var barData = [trace1];
   var barLayout = {
     title: `Top 10 OTUs for Test Subject ${sampleID}`,
+    xaxis: { title: "Abundance" },
   };
 
   // Plot bar chart:
@@ -73,13 +74,14 @@ function buildPlots(sampleID) {
   /* Plotly colorscales: Blackbody, Bluered, Blues, Earth, Electric, Greens, Greys, Hot,
     Jet, Picnic, Portland, Rainbow, RdBu, Reds, Viridis, YlGnBu, YlOrRd */
     
-    // Set responsive as true:
+  // Set responsive as true:
   var config = {responsive: true}
   var bubbleData = [trace2];
   var bubbleLayout = {
       title: "OTUs for Test Subject",
       showlegend: false,
-      xaxis: {title: "OTU ID"}
+      xaxis: {title: "OTU ID"},
+      yaxis: {title: "Abundance"}
   };
   Plotly.newPlot("bubble", bubbleData, bubbleLayout, config);
 })
@@ -94,7 +96,7 @@ function init() {
     subjectID.forEach((subject) => {
       dropdownMenu
         .append("option")
-        .text(subject)
+        .text("BB_" + subject)
         .property("value", subject);
     });
 
