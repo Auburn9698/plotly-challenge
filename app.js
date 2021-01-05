@@ -11,24 +11,26 @@ function displayInfo(sampleID) {
       var metaData = jsonData.metadata.filter(sample => sample.id == sampleID)[0]
       var demoPanel = d3.select("#sample-metadata")
       
-      // clear metadata
+      // clear info panel; prevents the info accumulating
       demoPanel.html("")
 
       // Add the subjects to the panel with key and value pairs:
       Object.entries(metaData).forEach(([key, value]) => {
-        demoPanel.append("h6").text(`${key}: ${value}`)
+        demoPanel.append("h5").text(`${key}: ${value}`)
       })
     })
   }
 
-// Funciton to build plots:
+// Function to build plots:
 function buildPlots(sampleID) {
   d3.json("./data/samples.json").then((jsonData) => {
 
     var sampleData = jsonData.samples.filter(sample => sample.id == sampleID)[0]
     var otuIds = sampleData.otu_ids
     var sampleValues = sampleData.sample_values
+    // Slice for the first 10 values:
     var sampleSlice = sampleValues.slice(0, 10)
+    // Reverse the order:
     var reverseSlice = sampleSlice.reverse()
     var otuLabels = sampleData.otu_labels   
 
@@ -49,6 +51,25 @@ function buildPlots(sampleID) {
 
   // Plot bar chart:
   Plotly.newPlot("bar", barData, barLayout);
+
+  // Set up data for bubble chart:
+  var trace2 = {
+    x: otuIds,
+    y: sampleValues,
+    mode: "markers",
+    marker: {
+        color: otuIds,
+        size: sampleValues
+    }
+  };
+  var bubbleData = [trace2];
+  var bubbleLayout = {
+      title: "OTUs for Test Subject",
+      showlegend: false,
+      xaxis: {title: "OTU ID"}
+  };
+  Plotly.newPlot("bubble", bubbleData, bubbleLayout);
+
 })
 }
 
@@ -71,7 +92,8 @@ function init() {
     displayInfo(firstSample);
   });
 }
-//d3.selectAll("#selDataset").on("change", optionChanged);
+
+// Function for changing the dataset, using "optionChanged" on the index.html:
 function optionChanged() {
 
     var dropdownMenu = d3.select("#selDataset");
