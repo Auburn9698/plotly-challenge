@@ -11,7 +11,7 @@ function displayInfo(sampleID) {
       var metaData = jsonData.metadata.filter(sample => sample.id == sampleID)[0]
       var demoPanel = d3.select("#sample-metadata")
       
-      // clear info panel; prevents the info accumulating
+      // Clear info panel; prevents the info accumulating
       demoPanel.html("")
 
       // Add the subjects to the panel with key and value pairs:
@@ -31,14 +31,19 @@ function buildPlots(sampleID) {
     // Slice for the first 10 values:
     var sampleSlice = sampleValues.slice(0, 10)
     // Reverse the order:
-    var reverseSlice = sampleSlice.reverse()
-    var otuLabels = sampleData.otu_labels   
+    var reverseSamples = sampleSlice.reverse()
+
+    var otuLabels = sampleData.otu_labels
+    // Slice for the first 10 values:
+    var labelSlice = otuLabels.slice(0,10)
+    // Reverse the order:
+    var reverseLabel = labelSlice.reverse()   
 
   // Data for horizontal bar chart:
   var trace1 = {
-    x: reverseSlice,
+    x: reverseSamples,
     y: otuIds.slice(0,10).map(otuIds => `OTU ${otuIds}`).reverse(),
-    text: otuLabels.slice(0,10).reverse(),
+    text: reverseLabel,
     marker:{color: "#0000ff"},
     type: "bar",
     orientation: "h"
@@ -46,7 +51,7 @@ function buildPlots(sampleID) {
 
   var barData = [trace1];
   var barLayout = {
-    title: `Top 10 OTUs for Subject ${sampleID}`,
+    title: `Top 10 OTUs for Test Subject ${sampleID}`,
   };
 
   // Plot bar chart:
@@ -59,17 +64,24 @@ function buildPlots(sampleID) {
     mode: "markers",
     marker: {
         color: otuIds,
+        colorscale: "Earth",
         size: sampleValues
-    }
+    },
+    text: otuLabels
   };
+
+  /* Plotly colorscales: Blackbody, Bluered, Blues, Earth, Electric, Greens, Greys, Hot,
+    Jet, Picnic, Portland, Rainbow, RdBu, Reds, Viridis, YlGnBu, YlOrRd */
+    
+    // Set responsive as true:
+  var config = {responsive: true}
   var bubbleData = [trace2];
   var bubbleLayout = {
       title: "OTUs for Test Subject",
       showlegend: false,
       xaxis: {title: "OTU ID"}
   };
-  Plotly.newPlot("bubble", bubbleData, bubbleLayout);
-
+  Plotly.newPlot("bubble", bubbleData, bubbleLayout, config);
 })
 }
 
