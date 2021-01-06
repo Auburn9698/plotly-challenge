@@ -1,12 +1,15 @@
 // JSON structure for reference:
+
 // metadata: [id, ethnicity, gender, age, location, bbtype, wfreq]
-// "metadata":[{"id": 940, "ethnicity": "Caucasian", "gender": "F", "age": 24.0, "location": "Beaufort/NC", "bbtype": "I", "wfreq": 2.0},
-// samples: [id (values), otu_ids (lists), sample_values (lists), otu_labels (lists)]
+// metadata Ex:[{"id": 940, "ethnicity": "Caucasian", "gender": "F", "age": 24.0, "location": "Beaufort/NC", "bbtype": "I", "wfreq": 2.0},
+
+// samples: [id (value), otu_ids (list), sample_values (list), otu_labels (list)]
+// samples Ex:[{"id": "940", "otu_ids": [1167, ..... 342], "sample_values": [163.... 2, 2], "otu_labels": ["Bacteria;Bacteroidetes... "Bacteria", "Bacteria"]}
 
 // Function to display demog. info in the panel:
 function displayInfo(sampleID) {
     d3.json("./data/samples.json").then((jsonData) => {
-      console.log(jsonData);
+      //console.log(jsonData);
 
       var metaData = jsonData.metadata.filter(sample => sample.id == sampleID)[0]
       var demoPanel = d3.select("#sample-metadata")
@@ -19,7 +22,7 @@ function displayInfo(sampleID) {
         demoPanel.append("h5").text(`${key}: ${value}`)
       })
     })
-  }
+  };
 
 // Function to build plots:
 function buildPlots(sampleID) {
@@ -76,6 +79,7 @@ function buildPlots(sampleID) {
     
   // Set responsive as true:
   var config = {responsive: true}
+
   var bubbleData = [trace2];
   var bubbleLayout = {
       title: "OTUs for Test Subject",
@@ -87,7 +91,7 @@ function buildPlots(sampleID) {
 
   // Add a gauge chart with https://plot.ly/javascript/gauge-charts/ :
   var subjectMetadata = jsonData.metadata.filter(subject => subject.id == sampleID)
-  console.log(subjectMetadata[0].wfreq);
+  //console.log(subjectMetadata[0].wfreq);
   
   // Build data for gauge chart:
   var trace3 = {
@@ -102,15 +106,15 @@ function buildPlots(sampleID) {
           ticktext: ["0", "1", "2","3", "4", "5", "6", "7", "8", "9"]},
           bar: {color: "darkblue"},
           steps: [
-            { range: [0, 1], color: "#ffffff" },
-            { range: [1, 2], color: "#e6f0ff" },
-            { range: [2, 3], color: "#cce0ff" },
-            { range: [3, 4], color: "#b3d1ff" },
-            { range: [4, 5], color: "#99c2ff" },
-            { range: [5, 6], color: "#80b3ff" },
-            { range: [6, 7], color: "#66a3ff" },
-            { range: [7, 8], color: "#4d94ff" },
-            { range: [8, 9], color: "#3385ff" }
+            {range: [0, 1], color: "#ffffff"},
+            {range: [1, 2], color: "#e6f0ff"},
+            {range: [2, 3], color: "#cce0ff"},
+            {range: [3, 4], color: "#b3d1ff"},
+            {range: [4, 5], color: "#99c2ff"},
+            {range: [5, 6], color: "#80b3ff"},
+            {range: [6, 7], color: "#66a3ff"},
+            {range: [7, 8], color: "#4d94ff"},
+            {range: [8, 9], color: "#3385ff"}
           ],
         }
     }
@@ -122,7 +126,7 @@ function buildPlots(sampleID) {
     };
     Plotly.newPlot("gauge", gaugeData, gaugeLayout)
 })
-}
+};
 
 function init() {
   var dropdownMenu = d3.select("#selDataset");
@@ -142,7 +146,7 @@ function init() {
     buildPlots(firstSample);
     displayInfo(firstSample);
   });
-}
+};
 
 // Function for changing the dataset, using "optionChanged" on the index.html:
 function optionChanged() {
@@ -153,7 +157,7 @@ function optionChanged() {
     // Display the demo info and charts for the selected subject:
     displayInfo(subject);
     buildPlots(subject);
-}
+};
 
 // Call init to initialize the page:
 init();
